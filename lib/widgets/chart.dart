@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../widgets/chart_bar.dart';
+
+import './chart_bar.dart';
 import '../models/transaction.dart';
 
 class Chart extends StatelessWidget {
@@ -13,24 +14,27 @@ class Chart extends StatelessWidget {
       final weekDay = DateTime.now().subtract(
         Duration(days: index),
       );
-      double totalSum = 0;
+      var totalSum = 0.0;
 
-      for (var transaction in recentTransactions) {
-        if (transaction.date.day == weekDay.day &&
-            transaction.date.month == weekDay.month &&
-            transaction.date.year == weekDay.year) {
-          totalSum += transaction.amount;
+      for (var i = 0; i < recentTransactions.length; i++) {
+        if (recentTransactions[i].date.day == weekDay.day &&
+            recentTransactions[i].date.month == weekDay.month &&
+            recentTransactions[i].date.year == weekDay.year) {
+          totalSum += recentTransactions[i].amount;
         }
       }
 
-      return {'day': DateFormat.E().format(weekDay).substring(0, 1), 'amount': totalSum};
-    })
-    .reversed
-    .toList();
+      return {
+        'day': DateFormat.E().format(weekDay).substring(0, 1),
+        'amount': totalSum,
+      };
+    }).reversed.toList();
   }
 
   double get totalSpending {
-    return groupedTransactionValues.fold(0.0, (previousValue, currentValue) => (previousValue + currentValue['amount']));
+    return groupedTransactionValues.fold(0.0, (sum, item) {
+      return sum + item['amount'];
+    });
   }
 
   @override
@@ -42,8 +46,17 @@ class Chart extends StatelessWidget {
         padding: EdgeInsets.all(10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: groupedTransactionValues.map((transactionValue) {
-            return ChartBar(transactionValue['day'], transactionValue['amount'], totalSpending == 0.0 ? 0.0 : (transactionValue['amount'] as double) / totalSpending);
+          children: groupedTransactionValues.map((data) {
+            return Flexible(
+              fit: FlexFit.tight,
+              child: ChartBar(
+                data['day'],
+                data['amount'],
+                totalSpending == 0.0
+                    ? 0.0
+                    : (data['amount'] as double) / totalSpending,
+              ),
+            );
           }).toList(),
         ),
       ),
