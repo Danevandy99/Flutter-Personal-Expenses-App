@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import './widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
@@ -59,43 +58,43 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
     Transaction(
-      id: 't1',
+      id: UniqueKey().toString(),
       title: 'New Shoes',
       amount: 69.99,
       date: DateTime.now(),
     ),
     Transaction(
-      id: 't2',
+      id: UniqueKey().toString(),
       title: 'Weekly Groceries',
       amount: 16.53,
       date: DateTime.now(),
     ),
     Transaction(
-      id: 't2',
+      id: UniqueKey().toString(),
       title: 'Weekly Groceries',
       amount: 16.53,
       date: DateTime.now(),
     ),
     Transaction(
-      id: 't2',
+      id: UniqueKey().toString(),
       title: 'Weekly Groceries',
       amount: 16.53,
       date: DateTime.now(),
     ),
     Transaction(
-      id: 't2',
+      id: UniqueKey().toString(),
       title: 'Weekly Groceries',
       amount: 25.53,
       date: DateTime.now().subtract(Duration(days: 2)),
     ),
     Transaction(
-      id: 't2',
+      id: UniqueKey().toString(),
       title: 'Weekly Groceries',
       amount: 25.53,
       date: DateTime.now().subtract(Duration(days: 2)),
     ),
     Transaction(
-      id: 't2',
+      id: UniqueKey().toString(),
       title: 'Weekly Groceries',
       amount: 25.53,
       date: DateTime.now().subtract(Duration(days: 2)),
